@@ -1,0 +1,101 @@
+  - name: Validating hardware types
+    shell: |
+        source ~/stackrc
+        openstack baremetal driver list --type dynamic
+    register: results_hardware_types
+  - debug:
+      var: results_hardware_types.stdout_lines
+
+  - name: New hardware type
+    shell: |
+        source ~/stackrc
+        OLDDRIVER="pxe_ipmitool"
+        NEWDRIVER="ipmi"
+        for NODE in $(openstack baremetal node list --driver $OLDDRIVER -c UUID -f value) ; do openstack baremetal node set $NODE --driver $NEWDRIVER; done
+
+  - name: Disable OpenStack Services
+    shell: |
+        sudo systemctl stop 'openstack-*' httpd haproxy mariadb 'rabbitmq*' docker xinetd
+
+  - name: Remove Red Hat OpenStack Platform director packages
+    shell: |
+      curl -o remove.sh https://raw.githubusercontent.com/sergeyfilyanin/openstack-collection/master/remove.sh
+      chmod +x remove.sh
+      ./remove.sh
+    become_user: stack
+    register: results_remove
+  - debug:
+      var: results_remove.stdout_lines
+
+  - name: Remove the content from the /etc/httpd and /var/lib/docker directories
+    shell: |
+        sudo rm -rf /etc/httpd /var/lib/docker
+ 
+  - name: Install the Leapp utility and jq
+    shell: |
+        sudo yum install leapp -y
+        sudo yum install jq -y
+
+  - name: Refresh subscription
+    shell: |
+        sudo subscription-manager refresh
+
+  - name: Substitute the Open vSwitch version
+    shell: |
+        echo 'openvswitch2.11' | sudo tee -a /etc/leapp/transaction/to_remove
+        echo 'openvswitch2.15' | sudo tee -a /etc/leapp/transaction/to_install
+
+  - name: Retain the Red Hat Ceph Storage 3 version of ceph-ansible
+    shell: |
+        echo 'ceph-ansible' | sudo tee -a /etc/leapp/transaction/to_keep
+
+  - name: Adjust the kernel modules
+    shell: |
+        sudo curl -o adjust-kernel.sh https://raw.githubusercontent.com/sergeyfilyanin/openstack-collection/master/adjust-kernel.sh
+        sudo chmod +x adjust-kernel.sh
+        sudo ./adjust-kernel.sh
+
+  - name: Remove the pam_pkcs11 module
+    shell: |
+      sudo leapp answer --add --section remove_pam_pkcs11_module_check.confirm=True
+    become_user: stack
+
+  - name: Set env variable
+    shell: |
+      export LEAPP_UNSUPPORTED=1
+      export LEAPP_DEVEL_TARGET_RELEASE=8.
+
+  - name: Remove the persistent network names 
+    shell: |
+      sudo rm -f /usr/share/leapp-repository/repositories/system_upgrade/el7toel8/actors/persistentnetnamesdisable/actor.py
+
+  - name: Download leapp-data
+    shell: |
+      sudo curl -o device_driver_deprecation_data.json https://raw.githubusercontent.com/sergeyfilyanin/openstack-collection/master/leapp-data/device_driver_deprecation_data.json
+      sudo mv device_driver_deprecation_data.json /etc/leapp/files/ 
+
+  - name: Adjust the kernel modules
+    shell: |
+        sudo curl -o adjust-kernel.sh https://raw.githubusercontent.com/sergeyfilyanin/openstack-collection/master/adjust-kernel.sh
+        sudo chmod +x adjust-kernel.sh
+        sudo ./adjust-kernel.sh
+
+  - name: Rm floppy and pata_acpi drivers
+    shell: |
+      sudo rmmod floppy
+      sudo rmmod pata_acpi
+
+  - name: Start the Leapp upgrade process
+    shell: |
+      sudo -E leapp upgrade --debug --enablerepo rhel-8-for-x86_64-baseos-eus-rpms --enablerepo rhel-8-for-x86_64-appstream-eus-rpms --enablerepo fast-datapath-for-rhel-8-x86_64-rpms --enablerepo ansible-2.9-for-rhel-8-x86_64-rpms
+
+  - name: Reboot approve
+    pause:
+      prompt: Please approve undercloud reboot! Press return to continue. Press Ctrl+c and then "a" to abort
+
+  - name: Reboot after upgrade NIC names
+    ansible.builtin.reboot:
+      test_command: uptime
+    become: yes
+    become_user: root
+  - debug: msg="Undercloud was restarted successfully"

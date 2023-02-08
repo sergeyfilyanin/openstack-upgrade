@@ -1,0 +1,24 @@
+#  - name: "Add PermitRootLogin no if it does not exist"
+#    become: yes
+#    lineinfile:
+#      path: /etc/ssh/sshd_config
+#      line: "PermitRootLogin no"
+#      state: present
+#      backup: yes
+
+#  - name: Using predictable NIC names for the undercloud node
+#    shell: |
+#        curl -o playbook-nics.yaml https://raw.githubusercontent.com/sergeyfilyanin/openstack-collection/master/playbook-nics.yaml
+#        ansible-playbook -c local -i localhost, playbook-nics.yaml
+#    become_user: stack
+
+  - name: Reboot approve 
+    pause:
+      prompt: Please approve undercloud reboot! Press return to continue. Press Ctrl+c and then "a" to abort
+
+  - name: Reboot after upgrade NIC names
+    ansible.builtin.reboot:
+      test_command: uptime
+    become: yes
+    become_user: root
+  - debug: msg="Undercloud was restarted successfully"

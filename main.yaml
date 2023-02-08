@@ -1,0 +1,8 @@
+---
+- name: "upgrade undercloud"
+  hosts: undercloud
+  become_user: stack
+
+
+  roles:
+    - undercloud-nic-update 

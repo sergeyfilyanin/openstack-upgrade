@@ -1,0 +1,17 @@
+  - name: Prerequisite for Validating Red Hat OpenStack Platform 13
+    shell: |
+        source ~/stackrc
+        curl -o pre-upgrade-validations.sh https://raw.githubusercontent.com/sergeyfilyanin/openstack-collection/master/pre-upgrade-validations.sh
+        chmod +x pre-upgrade-validations.sh
+
+  - name: Validating Red Hat OpenStack Platform 13
+    shell: |
+        source ~/stackrc
+        ./pre-upgrade-validations.sh
+    register: results_validate
+  - debug:
+      var: results_validate.stdout_lines
+
+  - name: Verify validation results
+    pause:
+      prompt: Please check validation results! Press return to continue. Press Ctrl+c and then "a" to abort
