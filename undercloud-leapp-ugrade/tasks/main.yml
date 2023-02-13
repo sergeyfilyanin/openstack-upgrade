@@ -58,7 +58,6 @@
   - name: Remove the pam_pkcs11 module
     shell: |
       sudo leapp answer --add --section remove_pam_pkcs11_module_check.confirm=True
-    become_user: stack
 
   - name: Set env variable
     shell: |
@@ -88,6 +87,10 @@
   - name: Start the Leapp upgrade process
     shell: |
       sudo -E leapp upgrade --debug --enablerepo rhel-8-for-x86_64-baseos-eus-rpms --enablerepo rhel-8-for-x86_64-appstream-eus-rpms --enablerepo fast-datapath-for-rhel-8-x86_64-rpms --enablerepo ansible-2.9-for-rhel-8-x86_64-rpms
+
+  - name: Create an empty .autorelabel file in your root directory
+    shell: |
+      sudo touch /.autorelabel
 
   - name: Reboot approve
     pause:
