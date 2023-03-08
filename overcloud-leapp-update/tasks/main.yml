@@ -40,6 +40,6 @@
   - name: Insert DockerInsecureRegistryAddress
     ansible.builtin.blockinfile:
       path: /home/stack/containers-prepare-parameter.yaml
-      block: |
+      block: |2
              DockerInsecureRegistryAddress:
              - director.ctlplane.osplab:8787
