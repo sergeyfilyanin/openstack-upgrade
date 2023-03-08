@@ -12,6 +12,7 @@
   - debug:
       var: results_validate.stdout_lines
 
+# Put here ip controller-0
   - name: Disable fencing
     shell: |
         source ~/stackrc
