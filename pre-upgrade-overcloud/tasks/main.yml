@@ -2,12 +2,6 @@
     shell: |
         source ~/stackrc
         openstack tripleo validator run --group pre-upgrade --python-interpreter /usr/libexec/platform-python -i inventory.yaml
-        chmod +x pre-upgrade-validations.sh
-
-  - name: Review the results of the validation report
-    shell: |
-        source ~/stackrc
-        openstack tripleo validator show run  --full
     register: results_validate
   - debug:
       var: results_validate.stdout_lines
