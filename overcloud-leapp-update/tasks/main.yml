@@ -41,5 +41,5 @@
     ansible.builtin.blockinfile:
       path: /home/stack/containers-prepare-parameter.yaml
       block: |2
-             DockerInsecureRegistryAddress:
-             - director.ctlplane.osplab:8787
+           DockerInsecureRegistryAddress:
+           - director.ctlplane.osplab:8787
