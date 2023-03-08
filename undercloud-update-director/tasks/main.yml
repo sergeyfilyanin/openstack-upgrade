@@ -21,12 +21,20 @@
 #      replace: "em0"
 #      backup: yes
 
-  - name: Add masquerade = false in the file undercloud.conf
-    lineinfile:
+  - name: Replace masquerade in the file undercloud.conf
+    replace:
       path: /home/stack/undercloud.conf
-      line: "masquerade = false"
-      state: present
+      regexp: "masquerade = true"
+      replace: "masquerade = false"
       backup: yes
+
+#  Now we have in file masquerade = true
+#  - name: Add masquerade = false in the file undercloud.conf
+#    lineinfile:
+#      path: /home/stack/undercloud.conf
+#      line: "masquerade = false"
+#      state: present
+#      backup: yes
 
   - name: Show undercloud.conf
     shell: |
