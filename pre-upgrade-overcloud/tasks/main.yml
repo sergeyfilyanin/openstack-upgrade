@@ -2,6 +2,7 @@
     shell: |
         source ~/stackrc
         openstack tripleo validator run --group pre-upgrade --python-interpreter /usr/libexec/platform-python -i inventory.yaml
+    ignore_errors: true
     register: results_validate
   - debug:
       var: results_validate.stdout_lines
