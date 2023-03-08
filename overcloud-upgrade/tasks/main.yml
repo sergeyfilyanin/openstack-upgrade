@@ -1,3 +1,8 @@
+  - name: Create NIC script
+    shell: |
+       source ~/stackrc      
+       touch update-nic-templates.sh
+  
   - name: Updating network interface templates
     ansible.builtin.blockinfile:
       path: /home/stack/update-nic-templates.sh
@@ -25,12 +30,12 @@
               fi
            done
  
-  - name: Add executable permissions to the script
-    shell: |
-       source ~/stackrc      
-       chmod +x update-nic-templates.sh
+   - name: Add executable permissions to the script
+     shell: |
+        source ~/stackrc      
+        chmod +x update-nic-templates.sh
  
-  - name: Run the script
-    shell: |
-        source ~/stackrc  
-        ./update-nic-templates.sh
+   - name: Run the script
+     shell: |
+         source ~/stackrc  
+         ./update-nic-templates.sh
