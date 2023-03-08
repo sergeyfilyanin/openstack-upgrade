@@ -33,5 +33,6 @@
         
   - name: Using predictable NIC names for overcloud nodes
     shell: |
-        source ~/stackrc       
+        source ~/stackrc      
+        export ANSIBLE_HOST_KEY_CHECKING=False
         ansible-playbook -i ~/inventory.yaml playbook-nics.yaml
