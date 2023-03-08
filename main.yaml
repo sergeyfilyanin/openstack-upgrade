@@ -8,5 +8,5 @@
 #    - rhosp-check
 #    - undercloud-nic-update
 #    - undercloud-leapp-ugrade
-    - undercloud-prerequisite-director
+#    - undercloud-prerequisite-director
     - undercloud-update-director
