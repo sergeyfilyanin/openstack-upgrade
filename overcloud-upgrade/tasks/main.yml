@@ -42,3 +42,4 @@
    register: results_validate
  - debug:
      var: results_validate.stdout_lines
+     
