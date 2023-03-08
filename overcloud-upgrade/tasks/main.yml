@@ -3,10 +3,10 @@
         source ~/stackrc      
         touch update-nic-templates.sh
   
-  - name: Updating network interface templates
-    ansible.builtin.blockinfile:
-      path: /home/stack/update-nic-templates.sh
-      block: |
+ - name: Updating network interface templates
+   ansible.builtin.blockinfile:
+     path: /home/stack/update-nic-templates.sh
+     block: |
           #!/bin/bash
           STACK_NAME="overcloud"
           ROLES_DATA="/usr/share/openstack-tripleo-heat-templates/roles_data.yaml"
