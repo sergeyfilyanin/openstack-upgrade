@@ -11,4 +11,5 @@
   - name: Disable fencing
     shell: |
         source ~/stackrc
+        export ANSIBLE_HOST_KEY_CHECKING=False
         ssh heat-admin@10.165.3.151 "sudo pcs property set stonith-enabled=false"
