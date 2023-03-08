@@ -1,4 +1,4 @@
-  - name: Create NIC script
+  - name: Create script
     shell: |
         source ~/stackrc      
         touch update-nic-templates.sh
