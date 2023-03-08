@@ -44,5 +44,5 @@
           ContainerImageRegistryCredentials:
             registry.redhat.io:
               envops: 'Unix_11!'
-           DockerInsecureRegistryAddress:
-           - director.ctlplane.osplab:8787
+          DockerInsecureRegistryAddress:
+          - director.ctlplane.osplab:8787
