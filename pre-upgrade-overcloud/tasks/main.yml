@@ -7,7 +7,7 @@
   - name: Review the results of the validation report
     shell: |
         source ~/stackrc
-        openstack tripleo validator show run  --full <UUID>
+        openstack tripleo validator show run  --full
     register: results_validate
   - debug:
       var: results_validate.stdout_lines
