@@ -39,3 +39,6 @@
    shell: |
         source ~/stackrc  
         ./update-nic-templates.sh
+   register: results_validate
+ - debug:
+     var: results_validate.stdout_lines
