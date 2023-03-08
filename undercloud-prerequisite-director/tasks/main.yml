@@ -22,7 +22,7 @@
 
   - name: Synchronize the operating system
     shell: |
-        sudo dnf distro-sync --nobest -y
+        sudo dnf distro-sync --nobest --allowerasing -y
     register: results_synchronize
   - debug:
       var: results_synchronize.stdout_lines
