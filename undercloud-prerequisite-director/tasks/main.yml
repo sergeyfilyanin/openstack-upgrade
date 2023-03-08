@@ -1,3 +1,7 @@
+  - name: Sleep for 30 seconds and continue with play
+    ansible.builtin.wait_for:
+      timeout: 30
+  
   - name: Lock the undercloud to a 8.4 release
     shell: |
         sudo subscription-manager release --set=8.4
