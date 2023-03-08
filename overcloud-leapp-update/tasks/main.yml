@@ -16,23 +16,30 @@
 #            UpgradeInitCommand: "sudo dnf config-manager --save --setopt exclude=''"
  
  
-  - name: Copying the Leapp data on the overcloud nodes
-    shell: |
-        source ~/stackrc
-        tripleo-ansible-inventory --static-yaml-inventory ~/inventory.yaml
+#  - name: Copying the Leapp data on the overcloud nodes
+#    shell: |
+#        source ~/stackrc
+#        tripleo-ansible-inventory --static-yaml-inventory ~/inventory.yaml
               
-  - name: Replace tripleo-admin
-    shell: |
-       source ~/stackrc
-       sed  -i 's/tripleo-admin/heat-admin/g' ~/inventory.yaml
+#  - name: Replace tripleo-admin
+#    shell: |
+#       source ~/stackrc
+#       sed  -i 's/tripleo-admin/heat-admin/g' ~/inventory.yaml
   
-  - name: Run ansible playbook
-    shell: |
-       source ~/stackrc  
-       ansible -i ~/inventory.yaml --become -m synchronize -a "src=/etc/leapp/files dest=/etc/leapp/" overcloud
+#  - name: Run ansible playbook
+#    shell: |
+#       source ~/stackrc  
+#       ansible -i ~/inventory.yaml --become -m synchronize -a "src=/etc/leapp/files dest=/etc/leapp/" overcloud
         
-  - name: Using predictable NIC names for overcloud nodes
-    shell: |
-        source ~/stackrc      
-        export ANSIBLE_HOST_KEY_CHECKING=False
-        ansible-playbook -i ~/inventory.yaml playbook-nics.yaml
+#  - name: Using predictable NIC names for overcloud nodes
+#    shell: |
+#        source ~/stackrc      
+#        export ANSIBLE_HOST_KEY_CHECKING=False
+#        ansible-playbook -i ~/inventory.yaml playbook-nics.yaml
+ 
+  - name: Insert DockerInsecureRegistryAddress
+    ansible.builtin.blockinfile:
+      path: /home/stack/containers-prepare-parameter.yaml
+      block: |
+             DockerInsecureRegistryAddress:
+             - director.ctlplane.osplab:8787
