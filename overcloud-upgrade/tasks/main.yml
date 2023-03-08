@@ -35,7 +35,7 @@
        source ~/stackrc      
        chmod +x update-nic-templates.sh
  
-  - name: Run the script
-    shell: |
-         source ~/stackrc  
-         ./update-nic-templates.sh
+ - name: Run the script
+   shell: |
+        source ~/stackrc  
+        ./update-nic-templates.sh
