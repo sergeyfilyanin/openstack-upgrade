@@ -16,10 +16,9 @@
 #            UpgradeInitCommand: "sudo dnf config-manager --save --setopt exclude=''"
  
   - name: Replace container source
-    replace:
-      path: /home/stack/inventory.yaml
-      regexp: 'tripleo-admin'
-      replace: 'heat-admin'
+    shell: |
+        source ~/stackrc
+        sed  -i 's/tripleo-admin/heat-admin/g' ~/inventory.yaml
  
   - name: Copying the Leapp data on the overcloud nodes
     shell: |
