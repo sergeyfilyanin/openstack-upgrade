@@ -14,15 +14,14 @@
 #    shell: |
 #        sed -i '4 i container_images_file = /home/stack/containers-prepare-parameter.yaml' /home/stack/undercloud.conf
 
-  - name: Replace eth0 -> em0 in the file undercloud.conf
-    replace:
-      path: /home/stack/undercloud.conf
-      regexp: "eth0"
-      replace: "em0"
-      backup: yes
+#  - name: Replace eth0 -> em0 in the file undercloud.conf
+#    replace:
+#      path: /home/stack/undercloud.conf
+#      regexp: "eth0"
+#      replace: "em0"
+#      backup: yes
 
   - name: Add masquerade = false in the file undercloud.conf
-    become: stack
     lineinfile:
       path: /home/stack/undercloud.conf
       line: "masquerade = false"
