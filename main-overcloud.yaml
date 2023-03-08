@@ -5,5 +5,5 @@
 
 
   roles:
-    - pre-upgrade-overcloud
+#    - pre-upgrade-overcloud
     - overcloud-leapp-update
