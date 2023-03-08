@@ -2,23 +2,23 @@
     ansible.builtin.wait_for:
       timeout: 30
   
-  - name: Lock the undercloud to a 8.4 release
-    shell: |
-        sudo subscription-manager release --set=8.4
+#  - name: Lock the undercloud to a 8.4 release
+#    shell: |
+#        sudo subscription-manager release --set=8.4
 
-  - name: Subscriptions
-    shell: |
-        sudo subscription-manager repos --disable=*
-        sudo subscription-manager repos --enable=rhel-8-for-x86_64-baseos-eus-rpms --enable=rhel-8-for-x86_64-appstream-eus-rpms --enable=rhel-8-for-x86_64-highavailability-eus-rpms --enable=ansible-2.9-for-rhel-8-x86_64-rpms --enable=openstack-16.2-for-rhel-8-x86_64-rpms --enable=fast-datapath-for-rhel-8-x86_64-rpms
-    register: results_subscriptions
-  - debug:
-      var: results_subscriptions.stdout_lines
+#  - name: Subscriptions
+#    shell: |
+#        sudo subscription-manager repos --disable=*
+#        sudo subscription-manager repos --enable=rhel-8-for-x86_64-baseos-eus-rpms --enable=rhel-8-for-x86_64-appstream-eus-rpms --enable=rhel-8-for-x86_64-highavailability-eus-rpms --enable=ansible-2.9-for-rhel-8-x86_64-rpms --enable=openstack-16.2-for-rhel-8-x86_64-rpms --enable=fast-datapath-for-rhel-8-x86_64-rpms
+#    register: results_subscriptions
+#  - debug:
+#      var: results_subscriptions.stdout_lines
 
 
-  - name: Set the container-tools repository module to version 3.0
-    shell: |
-        sudo dnf module reset -y  container-tools
-        sudo dnf module enable -y container-tools:3.0
+#  - name: Set the container-tools repository module to version 3.0
+#    shell: |
+#        sudo dnf module reset -y  container-tools
+#        sudo dnf module enable -y container-tools:3.0
 
   - name: Synchronize the operating system
     shell: |
