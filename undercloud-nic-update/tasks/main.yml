@@ -6,11 +6,11 @@
 #      state: present
 #      backup: yes
 
-#  - name: Using predictable NIC names for the undercloud node
-#    shell: |
-#        curl -o playbook-nics.yaml https://raw.githubusercontent.com/sergeyfilyanin/openstack-collection/master/playbook-nics.yaml
-#        ansible-playbook -c local -i localhost, playbook-nics.yaml
-#    become_user: stack
+  - name: Using predictable NIC names for the undercloud node
+    shell: |
+        curl -o playbook-nics.yaml https://raw.githubusercontent.com/sergeyfilyanin/openstack-collection/master/playbook-nics.yaml
+        ansible-playbook -c local -i localhost, playbook-nics.yaml
+    become_user: stack
 
   - name: Reboot approve 
     pause:
