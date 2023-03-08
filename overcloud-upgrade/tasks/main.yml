@@ -30,10 +30,10 @@
               fi
            done
  
-  - name: Add executable permissions to the script
-    shell: |
-        source ~/stackrc      
-        chmod +x update-nic-templates.sh
+ - name: Add executable permissions to the script
+   shell: |
+       source ~/stackrc      
+       chmod +x update-nic-templates.sh
  
   - name: Run the script
     shell: |
