@@ -1,1 +1,27 @@
+  - name: Creating an upgrades environment file
+    shell: |
+        source ~/stackrc
+        touch templates/upgrades-environment.yaml
 
+  - name: Insert docker credentionals 
+    ansible.builtin.blockinfile:
+      path: /home/stack/templates/upgrades-environment.yaml
+      block: |
+          parameter_defaults:
+            UpgradeLeappDevelSkip: "LEAPP_UNSUPPORTED=1 LEAPP_DEVEL_TARGET_RELEASE=8.2"
+            LeappInitCommand: |
+              for module in pata_acpi floppy; do sudo sed -i "/^${module}$/d" /usr/share/leapp-repository/repositories/system_upgrade/el7toel8/actors/kernel/checkkerneldrivers/files/removed_drivers.txt; done
+              sudo rm -f /usr/share/leapp-repository/repositories/system_upgrade/el7toel8/actors/persistentnetnamesdisable/actor.py
+              sudo yum -y remove mariadb-server* || true
+            UpgradeInitCommand: "sudo dnf config-manager --save --setopt exclude=''"
+              
+  - name: Copying the Leapp data on the overcloud nodes
+    shell: |
+        source ~/stackrc
+        tripleo-ansible-inventory --static-yaml-inventory ~/inventory.yaml
+        ansible -i ~/inventory.yaml --become -m synchronize -a "src=/etc/leapp/files dest=/etc/leapp/" overcloud
+        
+  - name: Using predictable NIC names for overcloud nodes
+    shell: |
+        source ~/stackrc       
+        ansible-playbook -i ~/inventory.yaml playbook-nics.yaml
