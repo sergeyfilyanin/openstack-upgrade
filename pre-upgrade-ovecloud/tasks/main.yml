@@ -1,1 +1,19 @@
+  - name: Check the pre-upgrade requirements
+    shell: |
+        source ~/stackrc
+        openstack tripleo validator run --group pre-upgrade --python-interpreter /usr/libexec/platform-python -i inventory.yaml
+        chmod +x pre-upgrade-validations.sh
 
+
+  - name: Review the results of the validation report
+    shell: |
+        source ~/stackrc
+        openstack tripleo validator show run  --full <UUID>
+    register: results_validate
+  - debug:
+      var: results_validate.stdout_lines
+
+  - name: Disable fencing
+    shell: |
+        source ~/stackrc
+        ssh heat-admin@10.165.3.151 "sudo pcs property set stonith-enabled=false"
