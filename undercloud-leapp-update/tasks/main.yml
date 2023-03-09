@@ -100,7 +100,7 @@
     pause:
       prompt: Please approve undercloud reboot! Press return to continue. Press Ctrl+c and then "a" to abort
 
-  - name: Reboot after upgrade NIC names
+  - name: Reboot undercloud after Leapp upgrade
     ansible.builtin.reboot:
       test_command: uptime
     become: yes
