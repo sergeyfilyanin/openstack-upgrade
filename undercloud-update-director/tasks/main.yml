@@ -1,25 +1,25 @@
-#  - name: Install the command line tools
-#    shell: |
-#        sudo dnf install --allowerasing --nobest -y python3-tripleoclient
+  - name: Install the command line tools
+    shell: |
+        sudo dnf install --allowerasing --nobest -y python3-tripleoclient
 
-#  - name: Generate the default container image preparation file 
-#    shell: |
-#        sudo openstack tripleo container image prepare default --local-push-destination --output-env-file /home/stack/containers-prepare-parameter.yaml
+  - name: Generate the default container image preparation file 
+    shell: |
+        sudo openstack tripleo container image prepare default --local-push-destination --output-env-file /home/stack/containers-prepare-parameter.yaml
 
-#  - name: Set the container-tools repository module to version 3.0
-#    shell: |
-#        podman login registry.redhat.io -u envops -p 'Unix_11!'
+  - name: Set the container-tools repository module to version 3.0
+    shell: |
+        podman login registry.redhat.io -u envops -p 'Unix_11!'
 
-#  - name: Add the following parameter to the DEFAULT section in the file undercloud.conf
-#    shell: |
-#        sed -i '4 i container_images_file = /home/stack/containers-prepare-parameter.yaml' /home/stack/undercloud.conf
+  - name: Add the following parameter to the DEFAULT section in the file undercloud.conf
+    shell: |
+        sed -i '4 i container_images_file = /home/stack/containers-prepare-parameter.yaml' /home/stack/undercloud.conf
 
-#  - name: Replace eth0 -> em0 in the file undercloud.conf
-#    replace:
-#      path: /home/stack/undercloud.conf
-#      regexp: "eth0"
-#      replace: "em0"
-#      backup: yes
+  - name: Replace eth0 -> em0 in the file undercloud.conf
+    replace:
+      path: /home/stack/undercloud.conf
+      regexp: "eth0"
+      replace: "em0"
+      backup: yes
 
   - name: Replace masquerade in the file undercloud.conf
     replace:
@@ -28,13 +28,12 @@
       replace: "masquerade = false"
       backup: yes
 
-#  Now we have in file masquerade = true
-#  - name: Add masquerade = false in the file undercloud.conf
-#    lineinfile:
-#      path: /home/stack/undercloud.conf
-#      line: "masquerade = false"
-#      state: present
-#      backup: yes
+  - name: Add masquerade = false in the file undercloud.conf
+    lineinfile:
+      path: /home/stack/undercloud.conf
+      line: "masquerade = false"
+      state: present
+      backup: yes
 
   - name: Show undercloud.conf
     shell: |
@@ -69,4 +68,3 @@
   - name: Upgrade director
     shell: |
         openstack undercloud upgrade -y --log-file undercloud_upgrade.log
-
