@@ -5,7 +5,7 @@
 
 
   roles:
-    - rhosp-check
+#    - rhosp-check
     - undercloud-nic-update
     - undercloud-leapp-update
     - undercloud-prerequisite-director
