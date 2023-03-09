@@ -42,4 +42,11 @@
    register: results_validate
  - debug:
      var: results_validate.stdout_lines
-     
+
+ - name: Run prepare
+   shell: |
+        source ~/stackrc  
+        openstack overcloud upgrade prepare --templates -e /home/stack/templates/upgrades-environment.yaml -e /home/stack/containers-prepare-parameter.yaml
+   register: results_validate
+ - debug:
+     var: results_validate.stdout_lines
