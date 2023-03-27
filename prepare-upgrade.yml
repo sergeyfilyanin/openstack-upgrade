@@ -1,0 +1,9 @@
+---
+- name: "prepare upgrade undercloud"
+  hosts: undercloud
+  become_user: stack
+
+
+  roles:
+    - rhosp-check
+    - undercloud-nic-update
