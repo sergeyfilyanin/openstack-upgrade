@@ -1,0 +1,8 @@
+---
+- name: "leapp upgrade"
+  hosts: undercloud
+  become_user: stack
+
+
+  roles:
+    - undercloud-leapp-update
