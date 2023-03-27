@@ -1,0 +1,9 @@
+---
+- name: "upgrade undercloud"
+  hosts: undercloud
+  become_user: stack
+
+
+  roles:
+    - undercloud-prerequisite-director
+    - undercloud-update-director
