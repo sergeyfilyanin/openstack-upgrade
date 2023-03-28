@@ -5,5 +5,5 @@
 
 
   roles:
-    - undercloud-prerequisite-director
+#    - undercloud-prerequisite-director
     - undercloud-update-director
