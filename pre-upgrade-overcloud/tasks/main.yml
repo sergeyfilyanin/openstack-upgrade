@@ -1,3 +1,11 @@
+  - name: Create inventory
+    shell: |
+        source ~/stackrc
+        tripleo-ansible-inventory --static-yaml-inventory ~/inventory.yaml
+    register: results_validate
+  - debug:
+      var: results_validate.stdout_lines
+
   - name: Check the pre-upgrade requirements
     shell: |
         source ~/stackrc
