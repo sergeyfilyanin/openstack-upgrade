@@ -1,0 +1,9 @@
+---
+- name: "leapp update"
+  hosts: undercloud
+  become_user: stack
+
+
+  roles:
+    - overcloud-leapp-update
+    - overcloud-upgrade
