@@ -19,4 +19,4 @@
   - name: Disable fencing
     shell: |
         source ~/stackrc
-        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.153 "sudo pcs property set stonith-enabled=false"
+        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.130 "sudo pcs property set stonith-enabled=false"
