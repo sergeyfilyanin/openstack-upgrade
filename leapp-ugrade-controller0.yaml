@@ -1,0 +1,8 @@
+---
+- name: "upgrade overcloud"
+  hosts: undercloud
+  become_user: stack
+
+
+  roles:
+    - leapp-ugrade-controller0
