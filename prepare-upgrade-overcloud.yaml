@@ -7,3 +7,4 @@
   roles:
     - pre-upgrade-overcloud
     - overcloud-leapp-update
+    - overcloud-upgrade
