@@ -36,13 +36,3 @@
         source ~/stackrc      
         export ANSIBLE_HOST_KEY_CHECKING=False
         ansible-playbook -i ~/inventory.yaml playbook-nics.yaml
- 
-  - name: Insert DockerInsecureRegistryAddress
-    ansible.builtin.blockinfile:
-      path: /home/stack/containers-prepare-parameter.yaml
-      block: |2
-          ContainerImageRegistryCredentials:
-            registry.redhat.io:
-              envops: 'Unix_11!'
-          DockerInsecureRegistryAddress:
-          - director.ctlplane.osplab:8787
