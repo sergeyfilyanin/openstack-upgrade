@@ -26,7 +26,7 @@
 #      path: /home/stack/undercloud.conf
 #      regexp: "masquerade = true"
 #      replace: "masquerade = false"
-      backup: yes
+#      backup: yes
 
 #  - name: Add masquerade = false in the file undercloud.conf
 #    lineinfile:
