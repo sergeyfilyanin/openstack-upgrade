@@ -3,13 +3,20 @@
         source ~/stackrc
         touch templates/upgrades-environment.yaml
 
-  - name: Insert docker credentionals 
+  - name: 
     ansible.builtin.blockinfile:
       path: /home/stack/templates/upgrades-environment.yaml
       block: |
           parameter_defaults:
             UpgradeLeappCommandOptions: UpgradeLeappCommandOptions: " --enablerepo rhel-8-for-x86_64-baseos-eus-rpms --enablerepo rhel-8-for-x86_64-appstream-eus-rpms --enablerepo rhel-8-for-x86_64-highavailability-eus-rpms --enablerepo ansible-2.9-for-rhel-8-x86_64-rpms --enablerepo fast-datapath-for-rhel-8-x86_64-rpms "
 
+  - name: Red Hat Subscription Manager (RHSM) composable service
+    ansible.builtin.blockinfile:
+      path: /home/stack/templates/extra_template.yaml
+      block: |
+          resource_registry:
+            OS::TripleO::Services::Rhsm: /usr/share/openstack-tripleo-heat-templates/deployment/rhsm/rhsm-baremetal-ansible.yaml
+          
 #  - name: Insert docker credentionals 
 #    ansible.builtin.blockinfile:
 #      path: /home/stack/templates/upgrades-environment.yaml
