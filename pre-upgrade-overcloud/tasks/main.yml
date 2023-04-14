@@ -15,8 +15,9 @@
   - debug:
       var: results_validate.stdout_lines
 
-# Put here ip controller-0
   - name: Disable fencing
     shell: |
         source ~/stackrc
-        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.131 "sudo pcs property set stonith-enabled=false"
+        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.135 "sudo pcs property set stonith-enabled=false"
+        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.163 "sudo pcs property set stonith-enabled=false"
+        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.128 "sudo pcs property set stonith-enabled=false"
