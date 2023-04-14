@@ -1,0 +1,10 @@
+---
+- name: "preupgrade overcloud"
+  hosts: undercloud
+  become_user: stack
+
+
+  roles:
+    - pre-upgrade-overcloud
+    - overcloud-leapp-update
+    - overcloud-upgrade
