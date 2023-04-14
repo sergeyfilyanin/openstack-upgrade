@@ -3,12 +3,18 @@
         source ~/stackrc
         touch templates/upgrades-environment.yaml
 
-  - name: 
+  - name: Enable repo
     ansible.builtin.blockinfile:
       path: /home/stack/templates/upgrades-environment.yaml
       block: |
           parameter_defaults:
             UpgradeLeappCommandOptions: UpgradeLeappCommandOptions: " --enablerepo rhel-8-for-x86_64-baseos-eus-rpms --enablerepo rhel-8-for-x86_64-appstream-eus-rpms --enablerepo rhel-8-for-x86_64-highavailability-eus-rpms --enablerepo ansible-2.9-for-rhel-8-x86_64-rpms --enablerepo fast-datapath-for-rhel-8-x86_64-rpms "
+
+  - name: Creating extra templates
+    shell: |
+        source ~/stackrc
+        touch templates/extra_template.yaml
+        touch templates/rhsm.yaml
 
   - name: Red Hat Subscription Manager (RHSM) composable service
     ansible.builtin.blockinfile:
@@ -17,6 +23,28 @@
           resource_registry:
             OS::TripleO::Services::Rhsm: /usr/share/openstack-tripleo-heat-templates/deployment/rhsm/rhsm-baremetal-ansible.yaml
           
+  - name: Applying the rhsm composable service
+    ansible.builtin.blockinfile:
+      path: /home/stack/templates/rhsm.yaml
+      block: |
+        resource_registry:
+          OS::TripleO::Services::Rhsm: /usr/share/openstack-tripleo-heat-templates/deployment/rhsm/rhsm-baremetal-ansible.yaml
+        parameter_defaults:
+          RhsmVars:
+            rhsm_repos:
+              - rhel-8-for-x86_64-baseos-eus-rpms
+              - rhel-8-for-x86_64-appstream-eus-rpms
+              - rhel-8-for-x86_64-highavailability-eus-rpms
+              - ansible-2.9-for-rhel-8-x86_64-rpms
+              - openstack-16.2-for-rhel-8-x86_64-rpms
+              - fast-datapath-for-rhel-8-x86_64-rpms
+            rhsm_username: "envops"
+            rhsm_password: "Unix_11!"
+            rhsm_org_id: "16300313"
+            rhsm_method: "portal"
+            rhsm_release: 8.4
+
+
 #  - name: Insert docker credentionals 
 #    ansible.builtin.blockinfile:
 #      path: /home/stack/templates/upgrades-environment.yaml
