@@ -46,7 +46,7 @@
  - name: Run prepare
    shell: |
         source ~/stackrc  
-        openstack overcloud upgrade prepare --templates -e /home/stack/containers-prepare-parameter.yaml -e /home/stack/templates/upgrades-environment.yaml -e /home/stack/templates/rhsm.yaml  
+        openstack overcloud upgrade prepare --templates -e /home/stack/containers-prepare-parameter.yaml -e /home/stack/templates/upgrades-environment.yaml -e /home/stack/templates/rhsm.yaml -y  
    register: results_validate
  - debug:
      var: results_validate.stdout_lines
