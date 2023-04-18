@@ -54,7 +54,7 @@
  - name: Install jq
    shell: |
        source ~/stackrc
-       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y"
        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum install jq -y"
        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum remove epel-release -y"
        
