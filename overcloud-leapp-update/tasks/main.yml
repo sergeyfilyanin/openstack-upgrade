@@ -73,7 +73,12 @@
 #    shell: |
 #       source ~/stackrc  
 #       ansible -i ~/inventory.yaml --become -m synchronize -a "src=/etc/leapp/files dest=/etc/leapp/" overcloud
-        
+
+
+# Before
+# sed -i "s/tripleo-admin/heat-admin/g" inventory.yaml
+
+
   - name: Using predictable NIC names for overcloud nodes
     shell: |
         source ~/stackrc      
