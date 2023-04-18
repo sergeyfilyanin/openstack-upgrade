@@ -51,13 +51,19 @@
 # - debug:
 #     var: results_validate.stdout_lines
 
- - name: Install jq
+ - name: Install dependency
    shell: |
        source ~/stackrc
        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y"
        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum install jq -y"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo subscription-manager repos --enable rhel-7-server-rpms -y"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo subscription-manager repos --enable rhel-7-server-extras-rpms -y"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum update -y"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum install leapp-upgrade -y"
        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum remove epel-release -y"
        
+#Reboot 
+ 
  - name: Run system_upgrade
    shell: |
         source ~/stackrc  
