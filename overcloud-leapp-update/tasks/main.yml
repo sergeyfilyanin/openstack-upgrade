@@ -40,6 +40,7 @@
               - fast-datapath-for-rhel-8-x86_64-rpms
             rhsm_username: "envops"
             rhsm_password: "Unix_11!"
+            autosubscribe: "true"
             rhsm_org_id: "16300313"
             rhsm_method: "portal"
             rhsm_release: 8.4
