@@ -43,10 +43,18 @@
 # - debug:
 #     var: results_validate.stdout_lines
 
- - name: Run prepare
+# - name: Run prepare
+#   shell: |
+#        source ~/stackrc  
+#        openstack overcloud upgrade prepare --templates -e /home/stack/containers-prepare-parameter.yaml -e /home/stack/templates/upgrades-environment.yaml -e /home/stack/templates/rhsm.yaml -y  
+#   register: results_validate
+# - debug:
+#     var: results_validate.stdout_lines
+
+ - name: Run system_upgrade
    shell: |
         source ~/stackrc  
-        openstack overcloud upgrade prepare --templates -e /home/stack/containers-prepare-parameter.yaml -e /home/stack/templates/upgrades-environment.yaml -e /home/stack/templates/rhsm.yaml -y  
+        openstack overcloud upgrade run --tags system_upgrade --limit overcloud-controller-0 -y
    register: results_validate
  - debug:
      var: results_validate.stdout_lines
