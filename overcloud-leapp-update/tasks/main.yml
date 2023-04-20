@@ -5,7 +5,7 @@
        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum install jq -y"
        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum remove epel-release -y"
  
- - name: Creating an upgrades environment file
+  - name: Creating an upgrades environment file
     shell: |
         source ~/stackrc
         touch templates/upgrades-environment.yaml
