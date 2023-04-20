@@ -1,9 +1,9 @@
   - name: Install dependency
     shell: |
        source ~/stackrc
-       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y"
-       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum install jq -y"
-       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum remove epel-release -y"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.127 "sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.127 "sudo yum install jq -y"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.127 "sudo yum remove epel-release -y"
  
   - name: Creating an upgrades environment file
     shell: |
