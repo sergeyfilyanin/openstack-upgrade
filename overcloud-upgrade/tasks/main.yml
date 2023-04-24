@@ -67,7 +67,7 @@
  - name: Run Download the container images
    shell: |
         source ~/stackrc  
-        openstack overcloud external-upgrade run --stack STACK NAME --tags container_image_prepare -y  
+        openstack overcloud external-upgrade run --tags container_image_prepare -y  
    register: results_validate
  - debug:
      var: results_validate.stdout_lines
