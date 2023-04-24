@@ -18,9 +18,9 @@
   - name: Disable fencing
     shell: |
         source ~/stackrc
-        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.151 "sudo pcs property set stonith-enabled=false"
-        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.167 "sudo pcs property set stonith-enabled=false"
-        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.147 "sudo pcs property set stonith-enabled=false"
+        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.175 "sudo pcs property set stonith-enabled=false"
+        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.150 "sudo pcs property set stonith-enabled=false"
+        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.133 "sudo pcs property set stonith-enabled=false"
 
 #  - name: Enable subscription
 #    shell: |
