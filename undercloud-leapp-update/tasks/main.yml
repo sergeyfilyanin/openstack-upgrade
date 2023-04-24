@@ -31,9 +31,9 @@
 #  - debug:
 #      var: results_remove.stdout_lines
 
-  - name: Remove the content from the /etc/httpd and /var/lib/docker directories
-    shell: |
-        sudo rm -rf /etc/httpd /var/lib/docker
+#  - name: Remove the content from the /etc/httpd and /var/lib/docker directories
+#    shell: |
+#        sudo rm -rf /etc/httpd /var/lib/docker
  
   - name: Install the Leapp utility and jq
     shell: |
