@@ -63,11 +63,43 @@
 #       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum remove epel-release -y"
        
 #Reboot 
- 
+
+ - name: Run Download the container images
+   shell: |
+        source ~/stackrc  
+        openstack overcloud external-upgrade run --stack STACK NAME --tags container_image_prepare -y  
+   register: results_validate
+ - debug:
+     var: results_validate.stdout_lines
+      
  - name: Run system_upgrade
    shell: |
         source ~/stackrc  
         openstack overcloud upgrade run --tags system_upgrade --limit overcloud-controller-0 -y
+   register: results_validate
+ - debug:
+     var: results_validate.stdout_lines
+
+ - name: Transfer db from existing node to bootstarp_node
+   shell: |
+        source ~/stackrc  
+        openstack overcloud external-upgrade run --tags system_upgrade_transfer_data -y
+   register: results_validate
+ - debug:
+     var: results_validate.stdout_lines
+     
+ - name: Launch temporary rhosp_v16.2 container on compute_nodes 
+   shell: |
+        source ~/stackrc  
+        openstack overcloud upgrade run --playbook upgrade_steps_playbook.yaml --tags nova_hybrid_state --limit all -y
+   register: results_validate
+ - debug:
+     var: results_validate.stdout_lines
+
+ - name: Upgrade overcloud with no tags 
+   shell: |
+        source ~/stackrc  
+        openstack overcloud upgrade run --limit overcloud-controller-0 -y
    register: results_validate
  - debug:
      var: results_validate.stdout_lines
