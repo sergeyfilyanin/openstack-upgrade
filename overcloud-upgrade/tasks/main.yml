@@ -96,10 +96,10 @@
  - debug:
      var: results_validate.stdout_lines
 
- - name: Upgrade overcloud with no tags 
-   shell: |
-        source ~/stackrc  
-        openstack overcloud upgrade run --limit overcloud-controller-0 -y
-   register: results_validate
- - debug:
-     var: results_validate.stdout_lines
+# - name: Upgrade overcloud with no tags 
+#   shell: |
+#        source ~/stackrc  
+#        openstack overcloud upgrade run --limit overcloud-controller-0 -y
+#   register: results_validate
+# - debug:
+#     var: results_validate.stdout_lines
