@@ -1,58 +1,58 @@
-#  - name: Install the command line tools
-#    shell: |
-#        sudo dnf install --allowerasing --nobest -y python3-tripleoclient
+  - name: Install the command line tools
+    shell: |
+        sudo dnf install --allowerasing --nobest -y python3-tripleoclient
 
-#  - name: Generate the default container image preparation file 
-#    shell: |
-#        sudo openstack tripleo container image prepare default --local-push-destination --output-env-file /home/stack/containers-prepare-parameter.yaml
+  - name: Generate the default container image preparation file 
+    shell: |
+        sudo openstack tripleo container image prepare default --local-push-destination --output-env-file /home/stack/containers-prepare-parameter.yaml
 
-#  - name: Set the container-tools repository module to version 3.0
-#    shell: |
-#        podman login registry.redhat.io -u envops -p 'Unix_11!'
+  - name: Set the container-tools repository module to version 3.0
+    shell: |
+        podman login registry.redhat.io -u envops -p 'Unix_11!'
 
-#  - name: Add the following parameter to the DEFAULT section in the file undercloud.conf
-#    shell: |
-#        sed -i '4 i container_images_file = /home/stack/containers-prepare-parameter.yaml' /home/stack/undercloud.conf
+  - name: Add the following parameter to the DEFAULT section in the file undercloud.conf
+    shell: |
+        sed -i '4 i container_images_file = /home/stack/containers-prepare-parameter.yaml' /home/stack/undercloud.conf
 
-#  - name: Replace eth0 -> em0 in the file undercloud.conf
-#    replace:
-#      path: /home/stack/undercloud.conf
-#      regexp: "eth0"
-#      replace: "em0"
-#      backup: yes
+  - name: Replace eth0 -> em0 in the file undercloud.conf
+    replace:
+      path: /home/stack/undercloud.conf
+      regexp: "eth0"
+      replace: "em0"
+      backup: yes
 
-#  - name: Replace masquerade in the file undercloud.conf
-#    replace:
-#      path: /home/stack/undercloud.conf
-#      regexp: "masquerade = true"
-#      replace: "masquerade = false"
-#      backup: yes
+  - name: Replace masquerade in the file undercloud.conf
+    replace:
+      path: /home/stack/undercloud.conf
+      regexp: "masquerade = true"
+      replace: "masquerade = false"
+      backup: yes
 
-#  - name: Add masquerade = false in the file undercloud.conf
-#    lineinfile:
-#      path: /home/stack/undercloud.conf
-#      line: "masquerade = false"
-#      state: present
-#      backup: yes
+  - name: Add masquerade = false in the file undercloud.conf
+    lineinfile:
+      path: /home/stack/undercloud.conf
+      line: "masquerade = false"
+      state: present
+      backup: yes
 
-#  - name: Show undercloud.conf
-#    shell: |
-#        cat /home/stack/undercloud.conf
-#    register: results_undercloud_conf
-#  - debug:
-#      var: results_undercloud_conf.stdout_lines
+  - name: Show undercloud.conf
+    shell: |
+        cat /home/stack/undercloud.conf
+    register: results_undercloud_conf
+  - debug:
+      var: results_undercloud_conf.stdout_lines
 
   - name: Verify validation results
     pause:
       prompt: Please check undercloud configuration! Press return to continue. Press Ctrl+c and then "a" to abort
 
-#  - name: Insert docker credentionals 
-#    ansible.builtin.blockinfile:
-#      path: /home/stack/containers-prepare-parameter.yaml
-#      block: |2
-#          ContainerImageRegistryCredentials:
-#            registry.redhat.io:
-#              envops: 'Unix_11!'
+  - name: Insert docker credentionals 
+    ansible.builtin.blockinfile:
+      path: /home/stack/containers-prepare-parameter.yaml
+      block: |2
+          ContainerImageRegistryCredentials:
+            registry.redhat.io:
+              envops: 'Unix_11!'
 
   - name: Show containers-prepare-parameter.yaml
     shell: |
@@ -65,6 +65,6 @@
     pause:
       prompt: Please check containers-prepare-parameter.yaml! Press return to continue. Press Ctrl+c and then "a" to abort
 
-  - name: Upgrade director
-    shell: |
-        openstack undercloud upgrade -y --log-file undercloud_upgrade.log
+#  - name: Upgrade director
+#    shell: |
+#        openstack undercloud upgrade -y --log-file undercloud_upgrade.log
