@@ -38,7 +38,7 @@
   - name: Install the Leapp utility and jq
     shell: |
         sudo yum install leapp -y
-       sudo yum install jq -y
+        sudo yum install jq -y
 
   - name: Refresh subscription
     shell: |
