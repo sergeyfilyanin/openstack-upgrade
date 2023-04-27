@@ -1,0 +1,8 @@
+---
+- name: "upgrade controller-1"
+  hosts: undercloud
+  become_user: stack
+
+
+  roles:
+    - upgrade-controller-1
