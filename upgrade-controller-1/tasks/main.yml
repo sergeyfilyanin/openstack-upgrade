@@ -17,10 +17,10 @@
        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.173 "sudo yum install leapp-upgrade -y"
        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.173 "sudo yum remove epel-release -y"
  
- - name: Run system_upgrade
-   shell: |
+  - name: Run system_upgrade
+    shell: |
         source ~/stackrc  
         openstack overcloud upgrade run --tags system_upgrade --limit overcloud-controller-1 -y
-   register: results_validate
- - debug:
-     var: results_validate.stdout_lines
+    register: results_validate
+  - debug:
+      var: results_validate.stdout_lines
