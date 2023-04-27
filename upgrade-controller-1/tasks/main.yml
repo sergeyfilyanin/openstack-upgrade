@@ -1,0 +1,26 @@
+  - name: Enable subscription
+    shell: |
+        source ~/stackrc
+        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.173 "sudo subscription-manager register --username envops --password 'Unix_11!' --auto-attach"
+    register: results_validate
+  - debug:
+      var: results_validate.stdout_lines
+
+  - name: Install dependency
+    shell: |
+       source ~/stackrc
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.173 "sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.173 "sudo yum install jq -y"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.173 "sudo subscription-manager repos --enable rhel-7-server-rpms"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.173 "sudo subscription-manager repos --enable rhel-7-server-extras-rpms"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.173 "sudo yum update -y"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.173 "sudo yum install leapp-upgrade -y"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.173 "sudo yum remove epel-release -y"
+ 
+ - name: Run system_upgrade
+   shell: |
+        source ~/stackrc  
+        openstack overcloud upgrade run --tags system_upgrade --limit overcloud-controller-1 -y
+   register: results_validate
+ - debug:
+     var: results_validate.stdout_lines
