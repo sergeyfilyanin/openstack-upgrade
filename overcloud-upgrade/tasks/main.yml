@@ -1,4 +1,4 @@
- - name: Create script
+ - name: " Create script / touch update-nic-templates.sh "
    shell: |
         source ~/stackrc      
         touch update-nic-templates.sh
@@ -30,12 +30,12 @@
               fi
            done
  
- - name: Add executable permissions to the script
+ - name: " Add executable permissions to the script / chmod +x update-nic-templates.sh "
    shell: |
        source ~/stackrc      
        chmod +x update-nic-templates.sh
  
- - name: Run the script
+ - name: " Run the script update-nic-templates.sh "
    shell: |
         source ~/stackrc  
         ./update-nic-templates.sh
@@ -43,7 +43,7 @@
  - debug:
      var: results_validate.stdout_lines
 
- - name: Run prepare
+ - name: " Run prepare / openstack overcloud upgrade prepare --templates "
    shell: |
         source ~/stackrc  
         openstack overcloud upgrade prepare --templates -e /home/stack/containers-prepare-parameter.yaml -e /home/stack/templates/upgrades-environment.yaml -e /home/stack/templates/rhsm.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/services/neutron-ovs.yaml -y  
@@ -51,20 +51,7 @@
  - debug:
      var: results_validate.stdout_lines
 
-# - name: Install dependency
-#   shell: |
-#       source ~/stackrc
-#       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y"
-#       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum install jq -y"
-#       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo subscription-manager repos --enable rhel-7-server-rpms -y"
-#       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo subscription-manager repos --enable rhel-7-server-extras-rpms -y"
-#       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum update -y"
-#       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum install leapp-upgrade -y"
-#       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.143 "sudo yum remove epel-release -y"
-       
-#Reboot 
-
- - name: Run Download the container images
+ - name: " Run Download the container images /  openstack overcloud external-upgrade run --tags container_image_prepare -y "
    shell: |
         source ~/stackrc  
         openstack overcloud external-upgrade run --tags container_image_prepare -y  
@@ -72,7 +59,7 @@
  - debug:
      var: results_validate.stdout_lines
       
- - name: Run system_upgrade
+ - name: " Run system_upgrade / openstack overcloud upgrade run --tags system_upgrade --limit overcloud-controller-0 -y "
    shell: |
         source ~/stackrc  
         openstack overcloud upgrade run --tags system_upgrade --limit overcloud-controller-0 -y
@@ -80,7 +67,7 @@
  - debug:
      var: results_validate.stdout_lines
 
- - name: Transfer db from existing node to bootstarp_node
+ - name: " Transfer db from existing node to bootstarp_node / openstack overcloud external-upgrade run --tags system_upgrade_transfer_data -y "
    shell: |
         source ~/stackrc  
         openstack overcloud external-upgrade run --tags system_upgrade_transfer_data -y
@@ -88,7 +75,7 @@
  - debug:
      var: results_validate.stdout_lines
      
- - name: Launch temporary rhosp_v16.2 container on compute_nodes 
+ - name: " Launch temporary rhosp_v16.2 container on compute_nodes / openstack overcloud upgrade run --playbook upgrade_steps_playbook.yaml --tags nova_hybrid_state --limit all -y "
    shell: |
         source ~/stackrc  
         openstack overcloud upgrade run --playbook upgrade_steps_playbook.yaml --tags nova_hybrid_state --limit all -y
@@ -96,10 +83,10 @@
  - debug:
      var: results_validate.stdout_lines
 
-# - name: Upgrade overcloud with no tags 
-#   shell: |
-#        source ~/stackrc  
-#        openstack overcloud upgrade run --limit overcloud-controller-0 -y
-#   register: results_validate
-# - debug:
-#     var: results_validate.stdout_lines
+ - name: " Upgrade overcloud with no tags / openstack overcloud upgrade run --limit overcloud-controller-0 -y "
+   shell: |
+        source ~/stackrc  
+        openstack overcloud upgrade run --limit overcloud-controller-0 -y
+   register: results_validate
+ - debug:
+     var: results_validate.stdout_lines
