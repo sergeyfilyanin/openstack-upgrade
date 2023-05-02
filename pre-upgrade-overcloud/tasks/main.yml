@@ -1,4 +1,4 @@
-  - name: Create inventory
+  - name: " Create inventory / tripleo-ansible-inventory --static-yaml-inventory ~/inventory.yaml "
     shell: |
         source ~/stackrc
         tripleo-ansible-inventory --static-yaml-inventory ~/inventory.yaml
@@ -6,7 +6,7 @@
   - debug:
       var: results_validate.stdout_lines
 
-  - name: Check the pre-upgrade requirements
+  - name: " Check the pre-upgrade requirements / openstack tripleo validator run --group pre-upgrade --python-interpreter /usr/libexec/platform-python -i inventory.yaml "
     shell: |
         source ~/stackrc
         openstack tripleo validator run --group pre-upgrade --python-interpreter /usr/libexec/platform-python -i inventory.yaml
@@ -15,14 +15,14 @@
   - debug:
       var: results_validate.stdout_lines
 
-  - name: Disable fencing
+  - name: "Disable fencing / sudo pcs property set stonith-enabled=false"
     shell: |
         source ~/stackrc
         ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.152 "sudo pcs property set stonith-enabled=false"
         ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.160 "sudo pcs property set stonith-enabled=false"
         ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.134 "sudo pcs property set stonith-enabled=false"
 
-  - name: Enable subscription
+  - name: "Enable subscription / sudo subscription-manager register"
     shell: |
         source ~/stackrc
         ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.152 "sudo subscription-manager register --username envops --password 'Unix_11!' --auto-attach"
