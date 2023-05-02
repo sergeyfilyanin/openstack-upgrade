@@ -1,13 +1,13 @@
   - name: " Install dependency / sudo yum install jq leapp-upgrade -y "
     shell: |
        source ~/stackrc
-       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.152 "sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y"
-       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.152 "sudo yum install jq -y"
-       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.152 "sudo subscription-manager repos --enable rhel-7-server-rpms"
-       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.152 "sudo subscription-manager repos --enable rhel-7-server-extras-rpms"
-       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.152 "sudo yum update -y"
-       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.152 "sudo yum install leapp-upgrade -y"
-       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.152 "sudo yum remove epel-release -y"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.158 "sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.158 "sudo yum install jq -y"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.158 "sudo subscription-manager repos --enable rhel-7-server-rpms"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.158 "sudo subscription-manager repos --enable rhel-7-server-extras-rpms"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.158 "sudo yum update -y"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.158 "sudo yum install leapp-upgrade -y"
+       ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.158 "sudo yum remove epel-release -y"
  
   - name: " Creating an upgrades environment file / touch templates/upgrades-environment.yaml "
     shell: |
