@@ -13,6 +13,8 @@
     shell: |
         source ~/stackrc
         touch templates/upgrades-environment.yaml
+  - debug:
+      var: results_validate.stdout_lines
 
   - name: " Enable repo --enablerepo rhel-8-for-x86_64-baseos-eus-rpms --enablerepo rhel-8-for-x86_64-appstream-eus-rpms "
     ansible.builtin.blockinfile:
@@ -26,6 +28,8 @@
         source ~/stackrc
         touch templates/extra_template.yaml
         touch templates/rhsm.yaml
+  - debug:
+     var: results_validate.stdout_lines
 
   - name: Red Hat Subscription Manager (RHSM) composable service
     ansible.builtin.blockinfile:
