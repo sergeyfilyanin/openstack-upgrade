@@ -1,4 +1,4 @@
-  - name: Install dependency
+  - name: " Install dependency / sudo yum install jq leapp-upgrade -y "
     shell: |
        source ~/stackrc
        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.152 "sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y"
@@ -9,12 +9,12 @@
        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.152 "sudo yum install leapp-upgrade -y"
        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.152 "sudo yum remove epel-release -y"
  
-  - name: Creating an upgrades environment file
+  - name: " Creating an upgrades environment file / touch templates/upgrades-environment.yaml "
     shell: |
         source ~/stackrc
         touch templates/upgrades-environment.yaml
 
-  - name: Enable repo
+  - name: " Enable repo --enablerepo rhel-8-for-x86_64-baseos-eus-rpms --enablerepo rhel-8-for-x86_64-appstream-eus-rpms "
     ansible.builtin.blockinfile:
       path: /home/stack/templates/upgrades-environment.yaml
       block: |
@@ -70,7 +70,7 @@
 #            UpgradeInitCommand: "sudo dnf config-manager --save --setopt exclude=''"
  
  
-  - name: Copying the Leapp data on the overcloud nodes
+  - name: " Copying the Leapp data on the overcloud nodes / tripleo-ansible-inventory --static-yaml-inventory ~/inventory.yaml "
     shell: |
         source ~/stackrc
         tripleo-ansible-inventory --static-yaml-inventory ~/inventory.yaml
@@ -80,12 +80,12 @@
        source ~/stackrc
        sed  -i 's/tripleo-admin/heat-admin/g' ~/inventory.yaml
   
-  - name: Run ansible playbook
+  - name: " Run ansible playbook / ansible -i ~/inventory.yaml --become -m synchronize "
     shell: |
        source ~/stackrc  
        ansible -i ~/inventory.yaml --become -m synchronize -a "src=/etc/leapp/files dest=/etc/leapp/" overcloud
 
-  - name: Using predictable NIC names for overcloud nodes
+  - name: " Using predictable NIC names for overcloud nodes / ansible-playbook -i ~/inventory.yaml playbook-nics.yaml "
     shell: |
         source ~/stackrc      
         export ANSIBLE_HOST_KEY_CHECKING=False
