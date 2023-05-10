@@ -18,14 +18,14 @@
   - name: "Disable fencing / sudo pcs property set stonith-enabled=false"
     shell: |
         source ~/stackrc
-        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.158 "sudo pcs property set stonith-enabled=false"
-        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.127 "sudo pcs property set stonith-enabled=false"
-        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.133 "sudo pcs property set stonith-enabled=false"
+        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.170 "sudo pcs property set stonith-enabled=false"
+        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.136 "sudo pcs property set stonith-enabled=false"
+        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.131 "sudo pcs property set stonith-enabled=false"
 
   - name: "Enable subscription / sudo subscription-manager register"
     shell: |
         source ~/stackrc
-        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.158 "sudo subscription-manager register --username envops --password 'Unix_11!' --auto-attach"
+        ssh -o StrictHostKeyChecking=no heat-admin@10.165.3.170 "sudo subscription-manager register --username envops --password 'Unix_11!' --auto-attach"
     register: results_validate
   - debug:
       var: results_validate.stdout_lines
