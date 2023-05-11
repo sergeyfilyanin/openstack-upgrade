@@ -1,39 +1,39 @@
-#  - name: Sleep for 30 seconds and continue with play
-#    ansible.builtin.wait_for:
-#      timeout: 30
+  - name: Sleep for 30 seconds and continue with play
+    ansible.builtin.wait_for:
+      timeout: 30
   
-#  - name: Validating hardware types
-#    shell: |
-#        source ~/stackrc
-#        openstack baremetal driver list --type dynamic
-#    register: results_hardware_types
-#  - debug:
-#      var: results_hardware_types.stdout_lines
+  - name: Validating hardware types
+    shell: |
+        source ~/stackrc
+        openstack baremetal driver list --type dynamic
+    register: results_hardware_types
+  - debug:
+      var: results_hardware_types.stdout_lines
 
-#  - name: New hardware type
-#    shell: |
-#        source ~/stackrc
-#        OLDDRIVER="pxe_ipmitool"
-#        NEWDRIVER="ipmi"
-#        for NODE in $(openstack baremetal node list --driver $OLDDRIVER -c UUID -f value) ; do openstack baremetal node set $NODE --driver $NEWDRIVER; done
+  - name: New hardware type
+    shell: |
+        source ~/stackrc
+        OLDDRIVER="pxe_ipmitool"
+        NEWDRIVER="ipmi"
+        for NODE in $(openstack baremetal node list --driver $OLDDRIVER -c UUID -f value) ; do openstack baremetal node set $NODE --driver $NEWDRIVER; done
 
-#  - name: Disable OpenStack Services
-#    shell: |
-#        sudo systemctl stop 'openstack-*' httpd haproxy mariadb 'rabbitmq*' docker xinetd
+  - name: Disable OpenStack Services
+    shell: |
+        sudo systemctl stop 'openstack-*' httpd haproxy mariadb 'rabbitmq*' docker xinetd
 
-#  - name: Remove Red Hat OpenStack Platform director packages
-#    shell: |
-#      curl -o remove.sh https://raw.githubusercontent.com/sergeyfilyanin/openstack-collection/master/remove.sh
-#      chmod +x remove.sh
-#      ./remove.sh
-#    become_user: stack
-#    register: results_remove
-#  - debug:
-#      var: results_remove.stdout_lines
+  - name: Remove Red Hat OpenStack Platform director packages
+    shell: |
+      curl -o remove.sh https://raw.githubusercontent.com/sergeyfilyanin/openstack-collection/master/remove.sh
+      chmod +x remove.sh
+      ./remove.sh
+    become_user: stack
+    register: results_remove
+  - debug:
+      var: results_remove.stdout_lines
 
-#  - name: Remove the content from the /etc/httpd and /var/lib/docker directories
-#    shell: |
-#        sudo rm -rf /etc/httpd /var/lib/docker
+  - name: Remove the content from the /etc/httpd and /var/lib/docker directories
+    shell: |
+        sudo rm -rf /etc/httpd /var/lib/docker
  
   - name: Install the Leapp utility and jq
     shell: |
