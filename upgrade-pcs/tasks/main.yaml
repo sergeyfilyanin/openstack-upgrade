@@ -1,0 +1,7 @@
+ - name: " Upgrade controller_nodes to new pacemaker cluster / openstack overcloud upgrade run --limit overcloud-controller-0,overcloud-controller-1,overcloud-controller-2 -y"
+   shell: |
+        source ~/stackrc  
+        openstack overcloud upgrade run --limit overcloud-controller-0,overcloud-controller-1,overcloud-controller-2 -y
+   register: results_validate
+ - debug:
+     var: results_validate.stdout_lines
