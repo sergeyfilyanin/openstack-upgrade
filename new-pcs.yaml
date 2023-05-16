@@ -1,0 +1,8 @@
+---
+- name: "upgrade to new pcs cluster"
+  hosts: undercloud
+  become_user: stack
+
+
+  roles:
+    - upgrade-pcs
