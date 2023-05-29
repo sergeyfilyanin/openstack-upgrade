@@ -1,42 +1,42 @@
- - name: " Run prepare / openstack overcloud upgrade prepare --templates "
-   shell: |
-        source ~/stackrc  
-        openstack overcloud upgrade prepare --templates -e /home/stack/containers-prepare-parameter.yaml -e /home/stack/templates/upgrades-environment.yaml -e /home/stack/templates/rhsm.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/services/neutron-ovs.yaml -e /home/stack/templates/glance_nfs.yaml -e /home/stack/templates/cinder_nfs.yaml -y  
-   register: results_validate
- - debug:
-     var: results_validate.stdout_lines
+# - name: " Run prepare / openstack overcloud upgrade prepare --templates "
+#   shell: |
+#        source ~/stackrc  
+#        openstack overcloud upgrade prepare --templates -e /home/stack/containers-prepare-parameter.yaml -e /home/stack/templates/upgrades-environment.yaml -e /home/stack/templates/rhsm.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/services/neutron-ovs.yaml -e /home/stack/templates/glance_nfs.yaml -e /home/stack/templates/cinder_nfs.yaml -y  
+#   register: results_validate
+# - debug:
+#     var: results_validate.stdout_lines
 
- - name: " Run Download the container images /  openstack overcloud external-upgrade run --tags container_image_prepare -y "
-   shell: |
-        source ~/stackrc  
-        openstack overcloud external-upgrade run --tags container_image_prepare -y  
-   register: results_validate
- - debug:
-     var: results_validate.stdout_lines
+# - name: " Run Download the container images /  openstack overcloud external-upgrade run --tags container_image_prepare -y "
+#   shell: |
+#        source ~/stackrc  
+#        openstack overcloud external-upgrade run --tags container_image_prepare -y  
+#   register: results_validate
+# - debug:
+#     var: results_validate.stdout_lines
       
- - name: " Run system_upgrade / openstack overcloud upgrade run --tags system_upgrade --limit overcloud-controller-0 -y "
-   shell: |
-        source ~/stackrc  
-        openstack overcloud upgrade run --tags system_upgrade --limit overcloud-controller-0 -y
-   register: results_validate
- - debug:
-     var: results_validate.stdout_lines
+# - name: " Run system_upgrade / openstack overcloud upgrade run --tags system_upgrade --limit overcloud-controller-0 -y "
+#   shell: |
+#        source ~/stackrc  
+#        openstack overcloud upgrade run --tags system_upgrade --limit overcloud-controller-0 -y
+#   register: results_validate
+# - debug:
+#     var: results_validate.stdout_lines
 
- - name: " Transfer db from existing node to bootstarp_node / openstack overcloud external-upgrade run --tags system_upgrade_transfer_data -y "
-   shell: |
-        source ~/stackrc  
-        openstack overcloud external-upgrade run --tags system_upgrade_transfer_data -y
-   register: results_validate
- - debug:
-     var: results_validate.stdout_lines
+# - name: " Transfer db from existing node to bootstarp_node / openstack overcloud external-upgrade run --tags system_upgrade_transfer_data -y "
+#   shell: |
+#        source ~/stackrc  
+#        openstack overcloud external-upgrade run --tags system_upgrade_transfer_data -y
+#   register: results_validate
+# - debug:
+#     var: results_validate.stdout_lines
      
- - name: " Launch temporary rhosp_v16.2 container on compute_nodes / openstack overcloud upgrade run --playbook upgrade_steps_playbook.yaml --tags nova_hybrid_state --limit all -y "
-   shell: |
-        source ~/stackrc  
-        openstack overcloud upgrade run --playbook upgrade_steps_playbook.yaml --tags nova_hybrid_state --limit all -y
-   register: results_validate
- - debug:
-     var: results_validate.stdout_lines
+# - name: " Launch temporary rhosp_v16.2 container on compute_nodes / openstack overcloud upgrade run --playbook upgrade_steps_playbook.yaml --tags nova_hybrid_state --limit all -y "
+#   shell: |
+#        source ~/stackrc  
+#        openstack overcloud upgrade run --playbook upgrade_steps_playbook.yaml --tags nova_hybrid_state --limit all -y
+#   register: results_validate
+# - debug:
+#     var: results_validate.stdout_lines
 
  - name: " Upgrade overcloud with no tags / openstack overcloud upgrade run --limit overcloud-controller-0 -y "
    shell: |
